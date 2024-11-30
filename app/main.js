@@ -56,25 +56,64 @@ const imageMapping = {
 
 async function getData() {
     try {
-        //returns a promise
         const response = await fetch('https://gsi.fly.dev/characters?limit=51');
-        //guard clause
+        
         if (response.status != 200) {
-            // throw new Error(response);
+            alert("Failed to load characters.");
+            return;
         } else {
-            //convert promise to json
             const data = await response.json();
-            console.log(data.results)
-            //this is unique to api
-            const imageUrl = data.results.forEach((result) =>{imageMapping[result.name]});
-            data.results.forEach((result) => document.querySelector("div.container").insertAdjacentHTML("beforeend", `
-        <div class="card h-1/5 w-1/6 border-4 rounded-3xl flex flex-col mx-4 items-center bg-cover bg-white p-7">
-            <h1>${result.name}</h1>
-            <img src="${imageUrl}" alt="${result.name}" />
-        </div>`));
+            console.log(data.results);
+
+            data.results.forEach((result) => {
+                const imageUrl = imageMapping[result.name];
+                if (!imageUrl) {
+                    console.warn(`No image found for ${result.name}`);
+                    return; 
+                }
+                document.querySelector("div.container").insertAdjacentHTML("beforeend", `
+                    <div class="card h-2/4 w-1/6 border-4 rounded-3xl flex flex-col mx-4 items-center bg-cover bg-white p-7" data-name="${result.name}">
+                        <h1>${result.name}</h1>
+                        <img src="${imageUrl}" alt="${result.name}" class ="w-11/12 h-5/6 rounded-2xl object-cover">
+                    </div>
+                `);
+                const card = document.querySelector(`.card[data-name="${result.name}"]`);
+                // const card = document.getElementById('card');
+
+                card.addEventListener('click', function() {
+                    showStats(result);
+                    clearBodyAndShowStats(result);
+                });
+            });
         }
     } catch (error) {
         alert("hey i couldnt find that character");
     }
-};
+}
 getData();
+
+function showStats(result) {
+    const statsContainer = document.getElementById('statsContainer');
+    const charName = document.getElementById('charName');
+    const charRarity = document.getElementById('charRarity');
+    const charWeapon = document.getElementById('charWeapon');
+    const charVision = document.getElementById('charVision');
+    charName.textContent = result.name;
+    charRarity.textContent = result.rarity;
+    charWeapon.textContent = result.weapon;
+    charVision.textContent = result.vision;
+    statsContainer.style.display = 'block';
+};
+function clearBodyAndShowStats(result) {
+    const body = document.querySelector('body');
+    body.innerHTML = '';
+    body.insertAdjacentHTML("beforeend", `
+        <div class="stats-card border-4 rounded-3xl w-1/2 mx-auto p-5 bg-white flex flex-col items-center">
+            <h1 class="text-xl font-bold">${result.name}</h1>
+            <img src="${imageMapping[result.name]}" alt="${result.name}" class="w-1/2 rounded-2xl object-cover mb-4">
+            <p><strong>Rarity:</strong> ${result.rarity}</p>
+            <p><strong>Weapon:</strong> ${result.weapon}</p>
+            <p><strong>Vision:</strong> ${result.vision}</p>
+        </div>
+    `);
+};
