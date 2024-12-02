@@ -67,21 +67,15 @@ async function getData() {
 
             data.results.forEach((result) => {
                 const imageUrl = imageMapping[result.name];
-                if (!imageUrl) {
-                    console.warn(`No image found for ${result.name}`);
-                    return; 
-                }
                 document.querySelector("div.container").insertAdjacentHTML("beforeend", `
                     <div class="card h-2/4 w-1/6 border-4 rounded-3xl flex flex-col mx-4 items-center bg-cover bg-white p-7" data-name="${result.name}">
-                        <h1>${result.name}</h1>
+                        <h1 style= "font-family: Urbanist">${result.name}</h1>
                         <img src="${imageUrl}" alt="${result.name}" class ="w-11/12 h-5/6 rounded-2xl object-cover">
                     </div>
                 `);
                 const card = document.querySelector(`.card[data-name="${result.name}"]`);
-                // const card = document.getElementById('card');
 
                 card.addEventListener('click', function() {
-                    showStats(result);
                     clearBodyAndShowStats(result);
                 });
             });
@@ -92,28 +86,16 @@ async function getData() {
 }
 getData();
 
-function showStats(result) {
-    const statsContainer = document.getElementById('statsContainer');
-    const charName = document.getElementById('charName');
-    const charRarity = document.getElementById('charRarity');
-    const charWeapon = document.getElementById('charWeapon');
-    const charVision = document.getElementById('charVision');
-    charName.textContent = result.name;
-    charRarity.textContent = result.rarity;
-    charWeapon.textContent = result.weapon;
-    charVision.textContent = result.vision;
-    statsContainer.style.display = 'block';
-};
 function clearBodyAndShowStats(result) {
     const body = document.querySelector('body');
     body.innerHTML = '';
     body.insertAdjacentHTML("beforeend", `
         <div class="stats-card border-4 rounded-3xl w-1/2 mx-auto p-5 bg-white flex flex-col items-center">
-            <h1 class="text-xl font-bold">${result.name}</h1>
+            <h1 style= "font-family: Urbanist" class="text-xl font-bold">${result.name}</h1>
             <img src="${imageMapping[result.name]}" alt="${result.name}" class="w-1/2 rounded-2xl object-cover mb-4">
-            <p><strong>Rarity:</strong> ${result.rarity}</p>
-            <p><strong>Weapon:</strong> ${result.weapon}</p>
-            <p><strong>Vision:</strong> ${result.vision}</p>
+            <p style= "font-family: Urbanist" style= "font-family: Edu Australia VIC WA NT Hand Precursive;"><strong>Rarity:</strong> ${result.rarity}</p>
+            <p style= "font-family: Urbanist" ><strong>Weapon:</strong> ${result.weapon}</p>
+            <p style= "font-family: Urbanist" ><strong>Vision:</strong> ${result.vision}</p>
         </div>
     `);
 };
