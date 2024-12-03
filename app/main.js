@@ -99,3 +99,8 @@ function clearBodyAndShowStats(result) {
         </div>
     `);
 };
+function backgroundImages() {
+    if (result.vision === 'Pyro') {
+        data.results.forEach((result) => result.style.backgroundImage === '')
+    }
+}
