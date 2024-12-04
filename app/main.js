@@ -100,7 +100,5 @@ function clearBodyAndShowStats(result) {
     `);
 };
 function backgroundImages() {
-    if (result.vision === 'Pyro') {
-        data.results.forEach((result) => result.style.backgroundImage === '')
-    }
-}
+        data.results.forEach((result) => result.style.backgroundImage = 'images/pyro background.jpg');
+};
