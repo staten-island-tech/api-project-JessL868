@@ -99,6 +99,3 @@ function clearBodyAndShowStats(result) {
         </div>
     `);
 };
-function backgroundImages() {
-        data.results.forEach((result) => result.style.backgroundImage = 'images/pyro background.jpg');
-};
