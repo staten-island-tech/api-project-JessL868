@@ -68,15 +68,18 @@ async function getData() {
             data.results.forEach((result) => {
                 const imageUrl = imageMapping[result.name];
                 document.querySelector("div.container").insertAdjacentHTML("beforeend", `
-                    <div class="card h-2/4 w-1/6 border-4 rounded-3xl flex flex-col mx-4 items-center bg-cover bg-white p-7" data-name="${result.name}">
+                    <div class="card h-2/4 w-1/6 border-4 rounded-3xl flex flex-col mx-4 items-center bg-cover bg-white p-7" data-name="${result.name}" data-vision="${result.vision}">
                         <h1 style= "font-family: Urbanist">${result.name}</h1>
                         <img src="${imageUrl}" alt="${result.name}" class ="w-11/12 h-5/6 rounded-2xl object-cover">
                     </div>
                 `);
+                backgroundImages();
+
                 const card = document.querySelector(`.card[data-name="${result.name}"]`);
 
                 card.addEventListener('click', function() {
                     clearBodyAndShowStats(result);
+                    backgroundImages();
                 });
             });
         }
