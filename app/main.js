@@ -73,13 +73,12 @@ async function getData() {
                         <img src="${imageUrl}" alt="${result.name}" class ="w-11/12 h-5/6 rounded-2xl object-cover">
                     </div>
                 `);
-                backgroundImages();
+
 
                 const card = document.querySelector(`.card[data-name="${result.name}"]`);
 
                 card.addEventListener('click', function() {
                     clearBodyAndShowStats(result);
-                    backgroundImages();
                 });
             });
         }
